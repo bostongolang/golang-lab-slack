@@ -40,6 +40,10 @@ a file`main.go` that will contain the code.
     mkdir -p weatherbot 
     cd weatherbot 
     touch weatherbot/weatherbot.go
+
+    In Windows:
+    md weatherbot
+    cd weatherbot
     ```
 
 1. Create an account on openweathermap and setup your API key.
@@ -49,6 +53,9 @@ a file`main.go` that will contain the code.
 
    ```bash
    export OWM_API_KEY=5634bf4c007be5d2f95aceeae356a2ba
+
+   or in Windows
+   SET OWM_API_KEY=5634bf4c007be5d2f95aceeae356a2ba
    ```
 
 1. Setup your weatherbot Slack API token.
@@ -81,35 +88,34 @@ a file`main.go` that will contain the code.
    package main
    
    import (
-   	"fmt"
-   	"os"
-   	"strings"
+           "fmt"
+           "os"
+           "strings"
    
-   	"golang.org/x/net/context"
+           "golang.org/x/net/context"
    
-   	slackbot "github.com/BeepBoopHQ/go-slackbot"
-     "github.com/briandowns/openweathermap"
-   	"github.com/nlopes/slack"
+           slackbot "github.com/BeepBoopHQ/go-slackbot"
+           "github.com/briandowns/openweathermap"
+           "github.com/nlopes/slack"
    )
    
    func main() {
-   	  ListenForWeather()
+           ListenForWeather()
    }
    
    func GetWeather(place string) (*openweathermap.CurrentWeatherData, error) {
-     // TODO: get the weather for the place
-   	r
-   	turn nil, nil
+           // TODO: get the weather for the place
+           return nil, nil
    }
    
    func ListenForWeather() {
-   	bot := slackbot.New(os.Getenv("SLACK_API_TOKEN"))
-   	// TODO: add a bot.Hear listener here for a `weather <place>` request
-   	bot.Run()
+           bot := slackbot.New(os.Getenv("SLACK_API_TOKEN"))
+           // TODO: add a bot.Hear listener here for a `weather <place>` request
+           bot.Run()
    }
    
    func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEvent) {
-     // TODO: Respond to a `weather <place>` request 
+           // TODO: Respond to a `weather <place>` request 
    }
    ```
   
