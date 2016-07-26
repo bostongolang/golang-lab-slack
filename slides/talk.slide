@@ -1,0 +1,82 @@
+Building a Slack Bot in Go
+
+Jen Andre
+CEO, Komand (We're hiring!)
+@fun_cuddles
+jen@komand.com
+
+* Setup
+
+- Install Go
+
+- Clone the repo 
+
+[[https://github.com/bostongolang/golang-lab-slack]]
+
+- Join the [[https://bostongolang.slack.com]] - channel #bots
+
+- Create a Slack Bot API key (follow the steps under the 'General Setup' section)
+
+* Agenda 
+
+(10 minutes) What are Slack bots?  How do we build them using Go?
+
+(60+ minutes) Go forth and build!
+- 'Beginner' or 'Advanced' track
+-  TAs will be walking around to help
+
+Around ~8:30ish demos
+
+* What are Slack bots? 
+
+Demo
+
+- Bots are 'bot users'
+- Slack has an API to build bots [[https://api.slack.com/]]
+- Web API vs 'Real Time API' (websockets)
+
+* Go libraries for building Slack bots
+
+- [[https://github.com/nlopes/slack]] (Comprehensive 'Raw' API)
+- [[https://github.com/BeepBoopHQ/go-slackbot]] (A nice wrapper for bots)
+
+* Connecting to Slack with go-slackbot 
+.code code/connect.go
+
+- Make sure to invite the bots to the channels you want them on in Slack!
+- To access the underlying nlopes client, use `bot.Client` 
+
+* Responding to a message
+
+.code code/respond.go
+
+* Responding to a message (part 2)
+
+- Uses the RTM API
+- Register a handler with `slackbot.Bot.Hear` 
+- Respond with `slackbot.Bot.Reply`
+
+* Posting a message with attachments
+
+.code code/message_with_attachments.go 
+
+* More about go-slackbot
+
+[[https://godoc.org/github.com/BeepBoopHQ/go-slackbot]]
+
+- Can only really reply to events as far as I can tell 
+- To 'initiate' a convo, you can use the raw nlopes API `PostMessage`
+
+* Initiating a convo
+
+.code code/initiate.go
+
+* Initiating a convo (Part 2)
+
+.code code/initiate.go
+
+* Resources
+
+[[https://github.com/nlopes/slack]] (Comprehensive 'Raw' API)
+[[https://github.com/BeepBoopHQ/go-slackbot]] (A nice wrapper for bots)
+[[https://api.slack.com]] (Slack API reference)
