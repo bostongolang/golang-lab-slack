@@ -73,7 +73,7 @@ Demo
 
 * Initiating a convo (Part 2)
 
-.code code/initiate.go
+.code code/initiate-2.go
 
 * Resources
 
