@@ -40,7 +40,6 @@ func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEv
 	if len(parts) != 2 {
 		return
 	}
-
 	weather, err := GetWeather(parts[1])
 	if err != nil {
 		fmt.Println("Could not get weather:", err)
