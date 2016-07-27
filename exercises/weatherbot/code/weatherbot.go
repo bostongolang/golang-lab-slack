@@ -16,8 +16,18 @@ func main() {
 	ListenForWeather()
 }
 
+// cambridge
 func GetWeather(place string) (*openweathermap.CurrentWeatherData, error) {
 	w, err := openweathermap.NewCurrent("F", "en")
+
+	// w == openweathermap.Weather{
+	// 	Temperature int
+	// 	Clouds string
+	// 	Language string
+	// 	Weather
+	// 	CurrentByName() &weather
+	// }
+
 	if err != nil {
 		return nil, fmt.Errorf("Could not get weather: %s", err)
 	}
@@ -31,16 +41,17 @@ func GetWeather(place string) (*openweathermap.CurrentWeatherData, error) {
 
 func ListenForWeather() {
 	bot := slackbot.New(os.Getenv("SLACK_API_TOKEN"))
-	bot.Hear("(?i)weather (.*)").MessageHandler(WeatherHandler)
+	bot.Hear("(?i)clouds (.*)").MessageHandler(WeatherHandler)
 	bot.Run()
 }
 
-func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEvent) {
-	parts := strings.Split(evt.Msg.Text, " ")
-	if len(parts) != 2 {
+func WeatherHandler(ctx context.Context, bot *slackbot.Bot, msg *slack.MessageEvent) {
+	parts := strings.Split(msg.Msg.Text, " ") // 'weather cambridge' -> ['weather','cambridge']
+	if len(parts) != 2 {                      // 2 == 2
 		return
 	}
-	weather, err := GetWeather(parts[1])
+
+	weather, err := GetWeather(parts[1]) // 'cambridge'
 	if err != nil {
 		fmt.Println("Could not get weather:", err)
 		return
@@ -50,5 +61,9 @@ func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEv
 	if len(weather.Weather) > 0 {
 		description = weather.Weather[0].Description
 	}
-	bot.Reply(evt, fmt.Sprintf("The current temperature for %s is %.0f degrees farenheight (%s)", weather.Name, weather.Main.Temp, description), slackbot.WithTyping)
+	bot.Reply(msg, fmt.Sprintf("The current temperature for %s is %.0f degrees farenheight (%s)",
+		weather.Name,
+		weather.Main.Temp,
+		description),
+		slackbot.WithTyping)
 }

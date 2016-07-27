@@ -11,7 +11,7 @@ import (
 )
 
 func listenForHumanWeakness() {
-	bot := slackbot.New(os.Getenv("SLACK_API_TOKEN"))
+	bot := slackbot.New(os.Getenv("SPARKY_SLACK_API_TOKEN"))
 	bot.Hear("(fail|tried|err|break|broke|won(|')t|can(|')t)").MessageHandler(humanFailureHandler)
 	bot.Run()
 }
