@@ -36,8 +36,8 @@ func ListenForWeather() {
 	bot.Run()
 }
 
-func WeatherHandler(ctx context.Context, bot *slackbot.Bot, msg *slack.MessageEvent) {
-	parts := strings.Split(msg.Msg.Text, " ")
+func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEvent) {
+	parts := strings.Split(evt.evt.Text, " ")
 	if len(parts) != 2 {
 		return
 	}
@@ -52,5 +52,5 @@ func WeatherHandler(ctx context.Context, bot *slackbot.Bot, msg *slack.MessageEv
 	if len(weather.Weather) > 0 {
 		description = weather.Weather[0].Description
 	}
-	bot.Reply(msg, fmt.Sprintf("The current temperature for %s is %.0f degrees farenheight (%s)", weather.Name, weather.Main.Temp, description), slackbot.WithTyping)
+	bot.Reply(evt, fmt.Sprintf("The current temperature for %s is %.0f degrees farenheight (%s)", weather.Name, weather.Main.Temp, description), slackbot.WithTyping)
 }
