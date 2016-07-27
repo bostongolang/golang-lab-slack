@@ -18,7 +18,6 @@ func main() {
 
 func GetWeather(place string) (*openweathermap.CurrentWeatherData, error) {
 	w, err := openweathermap.NewCurrent("F", "en")
-
 	if err != nil {
 		return nil, fmt.Errorf("Could not get weather: %s", err)
 	}
@@ -32,12 +31,12 @@ func GetWeather(place string) (*openweathermap.CurrentWeatherData, error) {
 
 func ListenForWeather() {
 	bot := slackbot.New(os.Getenv("SLACK_API_TOKEN"))
-	bot.Hear("(?i)clouds (.*)").MessageHandler(WeatherHandler)
+	bot.Hear("(?i)weather (.*)").MessageHandler(WeatherHandler)
 	bot.Run()
 }
 
 func WeatherHandler(ctx context.Context, bot *slackbot.Bot, evt *slack.MessageEvent) {
-	parts := strings.Split(evt.evt.Text, " ")
+	parts := strings.Split(evt.Msg.Text, " ")
 	if len(parts) != 2 {
 		return
 	}
